@@ -15,8 +15,8 @@
 #### Office hours
 
 - Location: Clayden 1.05
-- Tuesday, 4-5pm
-- Friday, 11am-12pm
+- Tuesday, 11am-12pm
+- Friday, 4-5pm
 
 #### Aims of the module
 
