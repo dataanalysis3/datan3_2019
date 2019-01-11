@@ -91,7 +91,7 @@ The plan below is flexible and I may change some topics and dates as we proceed.
 - 1 March. Functions.
 - 7 March. Reshaping and cleaning longitudinal data.
 - 14 March. Data visualisation (1).
-- 21 March. Data vidualisation (2).
+- 21 March. Data visualisation (2).
 - 28 March. Longitudinal modelling.
 
 #### Reading list
@@ -101,6 +101,10 @@ The module has a website: <http://abessudnov.net/dataanalysis3/>. Please note th
 The main text for this module is Grolemund and Wickham's *R for Data Science*.
 
 - G.Grolemund & H.Wickham. R for Data Science. Freely available at <http://r4ds.had.co.nz/>.
+
+For details on how to use R Markdown see:
+
+- Y.Xie, J.J.Allaire, G.Grolemund. (2018). [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/).
 
 There are many other resources that can help you with R. [DataCamp](https://www.datacamp.com/) is an online learning platform that covers most topics in this module. Also see a list of other resources here <https://www.tidyverse.org/learn/>.
 
