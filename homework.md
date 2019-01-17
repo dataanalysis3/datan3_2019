@@ -10,5 +10,5 @@ In this file I will list home assignments you need to to **before** coming to cl
 
 #### 24 January
 
-- Create an account on the [UK Data Service website](https://www.ukdataservice.ac.uk/), join my data usage following an email invitation, download the Understanding Society data (SN6614) and put it in the *data* folder in your project
-- Read ch.1 and 2 from [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+- Create an account on the [UK Data Service website](https://www.ukdataservice.ac.uk/), join my data usage following an email invitation, download the Understanding Society data (SN6614) and put it in the *data* folder in your project.
+- Read ch.1 and 2 from [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/).
