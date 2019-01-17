@@ -7,3 +7,5 @@ cor(a$x, a$y)
 # -1 
 
 z <- cor(a$x, a$y)
+
+jwdwd
