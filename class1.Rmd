@@ -1,0 +1,159 @@
+---
+title: "Data Analysis 3: Introduction"
+author: "Alexey Bessudnov"
+date: "17 January 2019"
+
+output:
+  ioslides_presentation
+--- 
+
+## Contents of the module
+
+- Real-life data analysis always involves data management 
+- Introducing some new techniques and software, especially the [*tidyverse*](https://www.tidyverse.org/) framework in R 
+- Some basic programming in R
+- We will not learn new statistical methods 
+- Prereqs: SOC1004/POL1008, SOC/POL1041, and SOC/POL2077
+
+## What you know already
+
+- SOC1004/POL1008: basic descriptive statistics, visualizations and R
+- SOC/POL1041: statistical inference and hypothesis testing
+- SOC/POL2077: linear (regression) model
+
+## How you can benefit from this module
+
+- In most workplaces (except academia) you won't have to do complex statistical analysis 
+- Often what you do is a relatively technically simple analysis with 'dirty' data
+- Another important skill is how to effectively present statistical analysis to people much statistical background
+- Applications: market research, policy analysis, business intelligence, data journalism, etc.
+- This should be helpful for your dissertations as well
+
+## Lecturer
+
+- Dr Alexey Bessudnov (http://abessudnov.net/)
+- Teaching assistant: Max Shilling
+
+## Topics
+
+- Reproducible research: Git, Github and R Markdown
+- Data structures and types in R
+- Manipulating data: the *dplyr* package
+- Reshaping longitudinal data: the *tidyr* package
+- Visualising data with the *ggplot2* package
+- Control structures and loops in R
+- Writing functions in R
+
+## What you should be able to do after you complete this module
+
+- Acquire more fluency with R
+- Analyse large and complex data set in R
+- Efficiently organise the data analysis workflow
+
+## Practical arrangements
+
+- Classes: Thursday, 2.30-4.30pm (Clayden Computational Lab)
+- No class on 28 February (week 7), moved to 1 March (10.30am-12.30pm, WSL 220)
+- Office hours (Clayden 1.05): Tuesday, 11am-12pm; Friday, 4-5pm
+- Class attendance: mandatory
+
+## Assessment: Statistical assignments
+
+- 50% of the final mark: 5 statistical assignments, 10% each
+- Statistical assignments will be R exercises
+- Deadlines: 29 January (test, does not count for the final mark), 5 February, 19 February, 5 March, 12 March, 26 March
+- Exercises will be released a week before the deadline
+- I aim to mark this within a week from submission
+- Assignments will be submitted both on Github (using Github Classroom) and Bart 
+
+## Assessment: Statistical report
+
+- 50% of the final mark: statistical report (2,000 words)
+- This will be a report with the results of independent longitudinal data analysis you will conduct with the Understanding Society data
+- Deadline: 9 April
+- I will communicate to you details about the report by 9 March at the latest (and likely earlier than this)
+- Marks and feedback will be released by 3 May
+- Please see the marking criteria in the module outline
+
+##  "Flipped classroom"
+
+- "Flipped classroom" is a pedagogical technique
+- It is impossible to teach data analysis; you can only learn it yourself
+- You read new material and do exercises at home before the class
+- In class we discuss it together, I answer questions, give you more exercises, etc.
+
+ 
+##  Resources
+
+- Module Github repo: https://github.com/dataanalysis3/datan3_2019
+- Module website: http://abessudnov.net/dataanalysis3/ (note that this accompanied the module in 2018 and this year some things will change)
+- Main text: G.Grolemund & H.Wickham. R for Data Science. Available online
+at http://r4ds.had.co.nz/.
+- Some other readings are in the module outline (I will be updating this with new readings)
+
+## Module workflow
+
+- All class notes and syntax files will be posted on https://github.com/dataanalysis3/datan3_2019
+- The file https://github.com/dataanalysis3/datan3_2019/blob/master/homework.md contains your homework (things you want to do before coming to the class)
+- You want to fork the repo above and create your own course project on Github on its basis (I will explain this later)
+- There will be a separate repository for each statistical assignment and I will explain later how you complete and submit assignments
+
+##  Git
+
+- [Git](https://git-scm.com/) is a version control software
+- It is mostly used by software developers, but can be applied to other projects as well
+- Please see the ProGit book (https://git-scm.com/book/en/v2), althout it is too detailed for our needs 
+- We will use Git in combination with Github and R Studio
+
+## Github
+
+- Github is a website where developers keep their code and collaborate
+- It is very popular among developers and it is increasingly used by social science researchers
+- It is good for you to know this tool
+- We will use [Github Classroom](https://classroom.github.com/) to organise submission and marking of assignments (please watch the videos on that website)
+- Let's explore https://github.com/dataanalysis3/datan3_2019
+
+## Exercise 1
+
+- Go to https://github.com/ and register your account. Please use your university email address (in the format ab789@exeter.ac.uk)
+- Before you do this you will need to have Git installed on your computer. If you haven't installed it at home please do it now: https://git-scm.com/
+- Once you have created your Github account please fork this repo: https://github.com/dataanalysis3/datan3_2019
+- Note that your fork will be public. If you want a private repo just create a new one
+- After this create a project in R Studio by cloning your Github repo
+
+## Exercise 2
+
+- Edit a file in your repository, and then stage, commit and push the changes to Github from R Studio
+- Edit a file on Github.com in your repository and then pull the changes to your computer
+
+## Data
+
+- In this module we will use the data from the [Understanding Society](https://www.understandingsociety.ac.uk/), a household longitudinal survey conducted in the UK
+- The main reason for this is that this data set has a particularly complex structure
+- You have read a paper introducing the Understanding Society for today's class
+- The data are released via the UK Data Service (study number 6614): https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=6614
+
+## Data access
+
+- I have created a data usage on the UK Data Service website for this module
+- I will invite you to this usage by sending an invitation to your university email address
+- You will need to accept the invitation, register an account on the UK Data Service
+- Then you will need to download the data (SN6614) in the TAB format (634Mb). It is a zip archive that you will need to extract and put in the *data* folder in your module project
+- If you do everything correctly then in your **data** folder you will have the folder **UKDA-6614-tab**
+
+## .gitignore file
+
+- You don't want the Understanding Society data to be synched to Github (it violates the agreement with the data provider and it is too large)
+- Maybe you will want to keep some other files in your project private as well
+- You can keep some files private by editing the *.gitignore* file in your project
+- Please edit your *.gitignore* file now and add the line "data/"
+- You can add other files and folder to *.gitignore* as well, please see https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+
+## For the next class
+
+- Create an account on the UK Data Service website, download the Understanding Society data and put it in the right folder
+- In the next class (24 January) we will talk about reproducible research and R Markdown
+- Please read ch.1 and 2 from R Markdown: The Definitive Guide (https://bookdown.org/yihui/rmarkdown/) before the class
+- Next week I will give you tasks for the test statistical assignment and Assignment 1
+
+
