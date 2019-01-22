@@ -1,0 +1,126 @@
+---
+title: 'Data Analysis 3: Class 2'
+author: "Alexey Bessudnov"
+date: "24 January 2019"
+output:
+  ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+## Plan for today
+
+- Assignments and submission
+- Reproducible research, project workflow, R Markdown
+- Understanding Society Data structure
+- Reading data in R
+
+## Assignments
+
+- Test assignment (deadline 29 Jan, 2pm): https://github.com/dataanalysis3/testAssignment2019
+- Accept the invitation that I sent by email and complete the assignment using Github Classroom
+- Once completed do not forget to submit on Bart
+- Assignment 1 (deadline 5 February, 2pm): 
+
+## Reproducible research
+
+- It should be possible to reproduce every statistical analysis you've done  (by other researchers or future you)
+- Always keep your code in scripts
+- Have a folder for each project (R Studio project) and create subfolders with a clear structure
+- Always write comments for your code so that other people (or future you) can understand what you have done
+- Organise your code in a clear way and follow style conventions (see, for example, Google's R Style Guide: https://google.github.io/styleguide/Rguide.xml)
+- Use Github
+
+## R Markdown
+
+- Combine code and output in one document
+- Easily change output formats (html, LaTeX, Word, etc.)
+- See [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+- Also see http://abessudnov.net/dataanalysis3/rmarkdown.html
+- Alternative: Jupyter Notebook
+- Now let us explore how it works
+
+## Exercise 1
+
+- Complete problems 1, 2 and 3 from your test statistical assignment
+- Experiment with different output formats
+- Commit and push the .Rmd and .md files on Github (do not commit files in other output formats)
+
+## Understanding Society data structure
+
+- Read the User Guide, pp. 57-64: https://www.understandingsociety.ac.uk/sites/default/files/downloads/documentation/mainstage/user-guides/mainstage-user-guide.pdf
+- Let us explore data files
+- **mrdoc** contains all the documentation 
+- **tab** contains data files in the tabulated format
+
+## Data structure 2
+
+- 18 waves of the BHPS data
+- 8 waves of UndSoc data + cross-wave data
+- Codebooks available here: https://www.understandingsociety.ac.uk/documentation/mainstage/dataset-documentation
+- Let us look at the latest wave 8 and explore the data files
+
+## Reading data in R
+
+- You can read data in R in several ways
+- Base R (*read.csv()* etc.)
+- We will use the **readr** package (part of **tidyverse**)
+- For tab separated files we want the function *read_tsv()*
+- At a later point, we will use the *fread()* function from the **data.table** package
+
+
+## Wave 8: data from the individual adult questionnaire (h_indresp)
+
+```{r}
+# attaching the tidyverse library quietly
+suppressMessages(library(tidyverse))
+
+indresp <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab")
+
+# remove the data to free up memory
+rm(indresp)
+
+```
+
+## Household-level substantive file (h_hhresp)
+
+
+```{r}
+hhresp <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_hhresp.tab")
+
+rm(hhresp)
+
+```
+
+## Household roster data (h_egoalt)
+
+```{r}
+egoalt <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_egoalt.tab")
+
+rm(egoalt)
+
+```
+
+## Stable individual characteristics
+
+```{r}
+xwavedat <- read_tsv("data/UKDA-6614-tab/tab/ukhls_wx/xwavedat.tab")
+
+rm(xwavedat)
+
+```
+
+## Other data files
+
+- h_child: data on children
+- h_youth: data from self-completion questionnaire for children
+- h_indall: all people in the household, inc. children and non-responses
+- h_indsamp: technical individual-level data
+- h_hhsamp: technical and observational data on hoseholds
+- h_callrec: call records
+- h_income: income and payments individual level data
+- h_newborn: data on newborn children
+- h_parstyle: parenting style data
