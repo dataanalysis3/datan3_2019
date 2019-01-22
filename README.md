@@ -66,6 +66,8 @@ The deadlines for statistical assignments are as following.
 - Assignment 4: 12 March, 5pm
 - Assignment 5: 26 March, 5pm
 
+Please see the list of Github repositories with the assignments here: https://github.com/dataanalysis3/datan3_2019/blob/master/assignments.md
+
 The marking criteria for statistical assignments are correctness of your code and of substantive interpretations (where applicable).
 
 The 3-week turnaround rule applies to statistical assignments, but my goal is to mark them and give you feedback within one week from submission.
@@ -77,6 +79,10 @@ The deadline for the final statistical report is 9 April, 5pm. I will publish mo
 The marking criteria for statistical reports are the following: originality of approach, complexity of analysis, correctness of code, correctness of interpretations, knowledge of background literature, style and accuracy.
 
 Late submissions up to two weeks after the deadline will be capped at 40\%. Submissions that are late for more than two weeks will not be accepted.
+
+#### Homework
+
+I assign homework for each class and you need to complete it before coming to class. Please see details here: https://github.com/dataanalysis3/datan3_2019/blob/master/homework.md
 
 #### Syllabus plan 
 
