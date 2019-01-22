@@ -12,3 +12,12 @@ In this file I will list home assignments you need to to **before** coming to cl
 
 - Create an account on the [UK Data Service website](https://www.ukdataservice.ac.uk/), join my data usage following an email invitation, download the Understanding Society data (SN6614) and put it in the *data* folder in your project.
 - Read ch.1 and 2 from [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/).
+
+#### 31 January
+
+- Read the following chapters from [R for Data Science](https://r4ds.had.co.nz): ch.4 (Workflow: basics), ch. 5 (Data transformation), ch. 6 (Workflow: scripts), ch. 8 (Workflow: projects), ch. 18 (Pipes). Note that some of these chapters are very short.
+- Do exercises 5.2.4, 5.5.2 and 5.6.7 from here: https://r4ds.had.co.nz/transform.html
+- Read ch. 3 (Trandform data) from the module website: http://abessudnov.net/dataanalysis3/transformdata.html
+
+
+
