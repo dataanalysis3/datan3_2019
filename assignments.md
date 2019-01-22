@@ -10,4 +10,4 @@ The mark for this assignment does not count towards your final grade.
 
 https://github.com/dataanalysis3/testAssignment2019
 
-Deadline: 29 January, 5pm.
+Deadline: 29 January, 2pm.

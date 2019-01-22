@@ -59,12 +59,12 @@ I will release problems for assignments one week before each deadline. Assignmen
 
 The deadlines for statistical assignments are as following.
 
-- Test submission: 29 January, 5pm (not part of your mark)
-- Assignment 1: 5 February, 5pm
-- Assignment 2: 19 February, 5pm
-- Assignment 3: 5 March, 5pm
-- Assignment 4: 12 March, 5pm
-- Assignment 5: 26 March, 5pm
+- Test submission: 29 January, 2pm (not part of your mark)
+- Assignment 1: 5 February, 2pm
+- Assignment 2: 19 February, 2pm
+- Assignment 3: 5 March, 2pm
+- Assignment 4: 12 March, 2pm
+- Assignment 5: 26 March, 2pm
 
 Please see the list of Github repositories with the assignments here: https://github.com/dataanalysis3/datan3_2019/blob/master/assignments.md
 
@@ -74,7 +74,7 @@ The 3-week turnaround rule applies to statistical assignments, but my goal is to
 
 For the final statistical report you will conduct independent analysis of the Understanding Society data and produce a report of 2,000 words describing the results of your analysis.
 
-The deadline for the final statistical report is 9 April, 5pm. I will publish more details describing your task at least one month before the submission deadline (i.e. no later than 9 March). You will receive your marks and feedback by 3 May.
+The deadline for the final statistical report is 9 April, 2pm. I will publish more details describing your task at least one month before the submission deadline (i.e. no later than 9 March). You will receive your marks and feedback by 3 May.
 
 The marking criteria for statistical reports are the following: originality of approach, complexity of analysis, correctness of code, correctness of interpretations, knowledge of background literature, style and accuracy.
 
