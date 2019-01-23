@@ -23,7 +23,7 @@ knitr::opts_chunk$set(message = FALSE)
 - Test assignment (deadline 29 Jan, 2pm): https://github.com/dataanalysis3/testAssignment2019
 - Accept the invitation that I sent by email and complete the assignment using Github Classroom
 - Once completed do not forget to submit on Bart
-- Assignment 1 (deadline 5 February, 2pm): 
+- Assignment 1 (deadline 5 February, 2pm): https://github.com/dataanalysis3/assignment1
 
 ## Reproducible research
 
