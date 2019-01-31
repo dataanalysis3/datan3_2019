@@ -1,0 +1,68 @@
+---
+title: 'Data Analysis 3: Class 3'
+author: "Alexey Bessudnov"
+date: "31 January 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+Plan for today:
+
+1. Test assignment.
+2. The **tidyverse** framework (https://www.tidyverse.org/).
+3. Reading in data with **readr**.
+4. Transforming data with **dplyr**.
+5. Statistical assignment 1: questions.
+6. Homework for next week.
+
+Importing data: read ch.11 from R for Data Science (Data import): https://r4ds.had.co.nz/data-import.html and ch.2 from my website (Read data): http://abessudnov.net/dataanalysis3/readdata.html.
+
+```{r}
+library(tidyverse)
+Data <- read_tsv("data/UKDA-6614-tab/tab/ukhls_wx/xwavedat.tab")
+```
+
+This is a cross-wave data file with stable characteristics of individuals. See the codebook at https://www.understandingsociety.ac.uk/documentation/mainstage/dataset-documentation/wave/xwave/datafile/xwavedat.
+
+See the dplyr cheetsheet: https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
+
+Exercises.
+
+1. Select the variables for: sex (derived), date of bith (derived), ethnic group (racel_dv). Also keep the cross-wave identifier (pidp) and the sample origin variable (memorig). 
+
+2. Filter the data to keep (in new data frames):
+        a) men only.
+        b) people born before 1950 and after 1975.
+        c) men of Pakistani origin born in 1958 or 1982. 
+
+Discuss: logical operators.
+
+3. Recode birth year into cohorts (a new variable): the G.I. Generation (born before 1924), Silent Generation (1925-42), Baby Boomers (1943-65), Generation X (1966-1980), Millenials (1981-99), Generation Z (2000-). (The years are approximate.)
+
+4. Recode ethnicity into the following groups: white British, Other White, Indian, Pakistani, other. (This classification doesn't make much sense, but we're doing this as an exercise).
+
+Discuss: numeric and character vectors (strings), factors. Missing values in R.
+
+5. Count the number of people belonging to different ethnic groups (and produce percentages). 
+
+6. Summarise the proportion of white British by generation.
+
+7. Summarise the proportion of women by birth year.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
