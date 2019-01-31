@@ -32,7 +32,27 @@ See the dplyr cheetsheet: https://github.com/rstudio/cheatsheets/blob/master/dat
 
 Exercises.
 
-1. Select the variables for: sex (derived), date of bith (derived), ethnic group (racel_dv). Also keep the cross-wave identifier (pidp) and the sample origin variable (memorig). 
+1. Select the variables for: sex (derived), date of birth (derived), ethnic group (racel_dv). Also keep the cross-wave identifier (pidp) and the sample origin variable (memorig).
+
+```{r}
+
+# subset(Data, select = c("pidp", "memorig", "sex_dv", "doby_dv", "racel_dv"))
+# Data[,c(1, 5, 15, 19)]
+
+select(Data, pidp, memorig, sex_dv, doby_dv, racel_dv)
+
+# table(Data$sex_dv)
+# prop.table(table(Data$sex_dv))
+# prop.table(table(Data$sex_dv)) * 100
+# 
+# Data$sex_dv %>%
+#   table() %>%
+#   prop.table()
+
+Data <- Data %>%
+  select(pidp, memorig, sex_dv, doby_dv, racel_dv)
+
+```
 
 2. Filter the data to keep (in new data frames):
         a) men only.
@@ -41,7 +61,47 @@ Exercises.
 
 Discuss: logical operators.
 
+```{r}
+Data %>%
+  filter(sex_dv == 1)
+
+Data %>%
+  filter(doby_dv > 0 & (doby_dv < 1950 |  doby_dv > 1975))
+
+Data %>%
+  filter(sex_dv == 1 & racel_dv == 10 & (doby_dv == 1958 | doby_dv == 1982))
+
+# Extra:
+
+Data %>%
+  filter(doby_dv %in% 1950:1974)
+
+```
+
+
 3. Recode birth year into cohorts (a new variable): the G.I. Generation (born before 1924), Silent Generation (1925-42), Baby Boomers (1943-65), Generation X (1966-1980), Millenials (1981-99), Generation Z (2000-). (The years are approximate.)
+
+```{r}
+Data <- Data %>%
+  mutate(generation = case_when(
+    between(doby_dv, 0, 1924) ~ "GI Generation",
+    between(doby_dv, 1925, 1942) ~ "Silent Generation",
+    between(doby_dv, 1943, 1965) ~ "Baby Boomers",
+    between(doby_dv, 1966, 1980) ~ "Generation X",
+    between(doby_dv, 1981, 1999) ~ "Millenials",
+    doby_dv >= 2000 ~ "Generation Z"
+  ))
+
+Data %>%
+  pull(generation) %>%
+  class()
+
+Data %>%
+  pull(generation) %>%
+  table()
+
+
+```
 
 4. Recode ethnicity into the following groups: white British, Other White, Indian, Pakistani, other. (This classification doesn't make much sense, but we're doing this as an exercise).
 
@@ -49,7 +109,26 @@ Discuss: numeric and character vectors (strings), factors. Missing values in R.
 
 5. Count the number of people belonging to different ethnic groups (and produce percentages). 
 
+```{r}
+Data %>%
+  count(racel_dv) %>%
+  mutate(perc = n / sum(n) * 100)
+
+```
+
 6. Summarise the proportion of white British by generation.
+
+```{r}
+Data %>%
+  filter(racel_dv != -9) %>%
+  mutate(whiteBritish = if_else(racel_dv == 1, 1, 0)) %>%
+  group_by(generation) %>%
+  summarise(
+    propWhiteBritish = mean(whiteBritish, na.rm = TRUE) * 100
+  )
+
+```
+
 
 7. Summarise the proportion of women by birth year.
 
