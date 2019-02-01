@@ -12,12 +12,12 @@ knitr::opts_chunk$set(message = FALSE)
 
 Plan for today:
 
-1. Test assignment.
-2. The **tidyverse** framework (https://www.tidyverse.org/).
-3. Reading in data with **readr**.
-4. Transforming data with **dplyr**.
-5. Statistical assignment 1: questions.
-6. Homework for next week.
+- Test assignment.
+- The **tidyverse** framework (https://www.tidyverse.org/).
+- Reading in data with **readr**.
+- Transforming data with **dplyr**.
+- Statistical assignment 1: questions.
+- Homework for next week.
 
 Importing data: read ch.11 from R for Data Science (Data import): https://r4ds.had.co.nz/data-import.html and ch.2 from my website (Read data): http://abessudnov.net/dataanalysis3/readdata.html.
 
@@ -34,54 +34,48 @@ Exercises.
 
 1. Select the variables for: sex (derived), date of birth (derived), ethnic group (racel_dv). Also keep the cross-wave identifier (pidp) and the sample origin variable (memorig).
 
-```{r}
+    ```{r}
 
-# subset(Data, select = c("pidp", "memorig", "sex_dv", "doby_dv", "racel_dv"))
-# Data[,c(1, 5, 15, 19)]
+# With base R:
+subset(Data, select = c("pidp", "memorig", "sex_dv", "doby_dv", "racel_dv"))
+Data[,c(1, 5, 15, 19)]
 
+# with dplyr
 select(Data, pidp, memorig, sex_dv, doby_dv, racel_dv)
 
-# table(Data$sex_dv)
-# prop.table(table(Data$sex_dv))
-# prop.table(table(Data$sex_dv)) * 100
-# 
-# Data$sex_dv %>%
-#   table() %>%
-#   prop.table()
+# using a pipe (%>%)
 
 Data <- Data %>%
   select(pidp, memorig, sex_dv, doby_dv, racel_dv)
 
-```
+    ```
 
 2. Filter the data to keep (in new data frames):
         a) men only.
         b) people born before 1950 and after 1975.
         c) men of Pakistani origin born in 1958 or 1982. 
 
-Discuss: logical operators.
 
-```{r}
+    ```{r}
+# a)
 Data %>%
   filter(sex_dv == 1)
 
+# b)
 Data %>%
   filter(doby_dv > 0 & (doby_dv < 1950 |  doby_dv > 1975))
 
+# c)
 Data %>%
   filter(sex_dv == 1 & racel_dv == 10 & (doby_dv == 1958 | doby_dv == 1982))
 
-# Extra:
 
-Data %>%
-  filter(doby_dv %in% 1950:1974)
-
-```
-
+    ```
 
 3. Recode birth year into cohorts (a new variable): the G.I. Generation (born before 1924), Silent Generation (1925-42), Baby Boomers (1943-65), Generation X (1966-1980), Millenials (1981-99), Generation Z (2000-). (The years are approximate.)
 
-```{r}
+    ```{r}
+# with case_when() (good with complex conditions)
 Data <- Data %>%
   mutate(generation = case_when(
     between(doby_dv, 0, 1924) ~ "GI Generation",
@@ -91,34 +85,79 @@ Data <- Data %>%
     between(doby_dv, 1981, 1999) ~ "Millenials",
     doby_dv >= 2000 ~ "Generation Z"
   ))
+# case_when is particularly useful when there are multiple variables in logical statements, for example:
+
+# men, 18 to 25 years old, recoded to "young men"
+# (the variable names do not refer to our data; this is just an example.)
+# case_when(
+#         between(age, 18, 25) & sex == "male" ~ "young men"
+# )
+
+# You can also use ifelse for recoding, but it works best with simple cases.
+# recode sex into "male" or "female"", dropping other cases.
 
 Data %>%
-  pull(generation) %>%
-  class()
+        mutate(sexBinary = ifelse(sex_dv == 1, "male",
+                                   ifelse(sex_dv == 2, "female", NA)))
 
-Data %>%
-  pull(generation) %>%
-  table()
-
-
-```
+    ```
 
 4. Recode ethnicity into the following groups: white British, Other White, Indian, Pakistani, other. (This classification doesn't make much sense, but we're doing this as an exercise).
 
-Discuss: numeric and character vectors (strings), factors. Missing values in R.
+
+    ```{r}
+table(Data$racel_dv)
+
+# using recode
+
+Data <- Data %>%
+        mutate(ethnRecoded = recode(racel_dv,
+                `1` = "white British",
+                `2` = "other White",
+                `3` = "other White",
+                `4` = "other White",
+                `9` = "Indian",
+                `10` = "Pakistani",
+                `-9` = NA_character_,
+                # .default is for all other values
+                .default = "other"
+        )) %>%
+        # let's make this new variable a factor
+        mutate(ethnRecoded = factor(ethnRecoded))
+
+# checking that the recoding was correct
+Data %>%
+        count(racel_dv, ethnRecoded)
+
+# we could do the same recoding with case_when
+
+Data %>%
+        mutate(ethnRecoded = case_when(
+                racel_dv == 1 ~ "white British",
+                between(racel_dv, 2, 4) ~ "other White",
+                racel_dv == 9 ~ "Indian",
+                racel_dv == 10 ~ "Pakistani",
+                (racel_dv >= 5 & racel_dv <= 8) | racel_dv > 10 ~ "other",
+                racel_dv == -9 ~ NA_character_
+        )) %>%
+        count(racel_dv, ethnRecoded)
+        
+
+    ```
+
 
 5. Count the number of people belonging to different ethnic groups (and produce percentages). 
 
-```{r}
+    ```{r}
 Data %>%
-  count(racel_dv) %>%
+  count(ethnRecoded) %>%
   mutate(perc = n / sum(n) * 100)
 
-```
+    ```
 
 6. Summarise the proportion of white British by generation.
 
-```{r}
+    ```{r}
 Data %>%
   filter(racel_dv != -9) %>%
   mutate(whiteBritish = if_else(racel_dv == 1, 1, 0)) %>%
@@ -127,12 +166,21 @@ Data %>%
     propWhiteBritish = mean(whiteBritish, na.rm = TRUE) * 100
   )
 
-```
+    ```
 
+7. Summarise the percentage of women by birth year.
 
-7. Summarise the proportion of women by birth year.
+    ```{r}
+Data %>%
+        filter(doby_dv > 0) %>%
+        mutate(female = ifelse(sex_dv == 2, TRUE,
+                                   ifelse(sex_dv == 1, FALSE, NA))) %>%
+        group_by(doby_dv) %>%
+        summarise(
+                propFemale = mean(female, na.rm = TRUE) * 100
+                )
 
-
+    ```
 
 
 
