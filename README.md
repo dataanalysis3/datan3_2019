@@ -108,6 +108,11 @@ The main text for this module is Grolemund and Wickham's *R for Data Science*.
 
 - G.Grolemund & H.Wickham. R for Data Science. Freely available at <http://r4ds.had.co.nz/>.
 
+Solutions for exercises in R for Data Science:
+
+- J.B.Arnold. [R for Data Science: Exercise Solutions](https://jrnold.github.io/r4ds-exercise-solutions/)
+
+
 For details on how to use R Markdown see:
 
 - Y.Xie, J.J.Allaire, G.Grolemund. (2018). [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/).
