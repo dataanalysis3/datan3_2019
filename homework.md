@@ -21,8 +21,11 @@ In this file I will list home assignments you need to to **before** coming to cl
 
 ##### 7 February
 
-- Read ch.13 for R for Data Science (Relational Data): https://r4ds.had.co.nz/relational-data.html. Do exercises 13.3.1 and 13.4.6.
+- Read ch.13 from R for Data Science (Relational Data): https://r4ds.had.co.nz/relational-data.html. Do exercises 13.3.1 and 13.4.6.
 - Read ch.4 (Join data) from my website: http://abessudnov.net/dataanalysis3/joining.html
 
+##### 14 February
 
+- Read ch.12 from R for Data Science (Tidy data): https://r4ds.had.co.nz/tidy-data.html . Do exercises 12.2.1, 12.3.3, 12.4.3.
+- Read ch.6 (Tidy data) from the module's website: http://abessudnov.net/dataanalysis3/tidy-data.html
 
