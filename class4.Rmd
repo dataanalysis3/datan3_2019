@@ -20,7 +20,104 @@ Plan for today:
 
 1. Create a balanced panel of all individuals who took part in the Understanding Society from 1 to 4. (Balanced means that you only want to include the individuals who took part in all 4 waves.) Only keep the following variables: person's unique identifier, sex and age. Are there any inconsistencies in the data?
 
+```{r}
+library(tidyverse)
+W1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_indresp.tab")
+W1 <- W1 %>%
+  select(pidp, a_sex, a_dvage)
+W2 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w2/b_indresp.tab")
+W2 <- W2 %>%
+  select(pidp, b_sex, b_dvage)
+W3 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w3/c_indresp.tab")
+W3 <- W3 %>%
+  select(pidp, c_sex, c_dvage)
+W4 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w4/d_indresp.tab")
+W4 <- W4 %>%
+  select(pidp, d_sex, d_dvage)
+
+Joined <- W1 %>%
+  inner_join(W2, by = "pidp") %>%
+  inner_join(W3, by = "pidp") %>%
+  inner_join(W4, by = "pidp")
+
+Joined2 <- W1 %>%
+  full_join(W2, by = "pidp") %>%
+  full_join(W3, by = "pidp") %>%
+  full_join(W4, by = "pidp")
+
+Joined %>%
+  count(a_sex, b_sex, c_sex, d_sex) %>%
+  filter(n < 10)
+
+Joined %>%
+  mutate(sumSex = a_sex + b_sex + c_sex + d_sex) %>%
+  filter(sumSex != 8 & sumSex != 4) %>%
+  pull(pidp)
+
+
+```
+
+
 2. Construct a table with the average number of calls per household by region in waves 1 and 8. You'll need to use the following data tables: household data from wave 1 and 8 (a_gor_dv and h_gor_dv identify region) and call records from waves 1 and 8 (callrec, a_ivtnc and h_ivtnc show the total number of calls).
+
+```{r}
+H1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_hhresp.tab")
+CR1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_callrec.tab")
+
+H1 <- H1 %>% select(a_hidp, a_gor_dv)
+CR1ed <- CR1 %>%
+  select(a_hidp, a_ivtnc) %>%
+  group_by(a_hidp) %>%
+  summarise(
+    ncalls = mean(a_ivtnc)
+  )
+
+CR1ed %>%
+  count(a_hidp) %>%
+  filter(n > 1)
+
+Joined1 <- H1 %>%
+  left_join(CR1ed, by = "a_hidp")
+
+Aggr1 <- Joined1 %>%
+  group_by(a_gor_dv) %>%
+  summarise(
+    meanCall = mean(ncalls, na.rm = TRUE)
+  )
+Aggr1
+
+H8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_hhresp.tab")
+CR8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_callrec.tab")
+
+H8 <- H8 %>% select(h_hidp, h_gor_dv)
+CR8ed <- CR8 %>%
+  select(h_hidp, h_ivtnc) %>%
+  group_by(h_hidp) %>%
+  summarise(
+    ncalls = mean(h_ivtnc)
+  )
+
+Joined8 <- H8 %>%
+  left_join(CR8ed, by = "h_hidp")
+
+Aggr8 <- Joined8 %>%
+  group_by(h_gor_dv) %>%
+  summarise(
+    meanCall = mean(ncalls, na.rm = TRUE)
+  ) %>%
+  filter(h_gor_dv != -9)
+Aggr8
+
+Aggr1 %>%
+  full_join(Aggr8, by = c("a_gor_dv" = "h_gor_dv")) %>%
+  rename(region = a_gor_dv) %>%
+  rename(wave1 = meanCall.x) %>%
+  rename(wave8 = meanCall.y)
+
+
+```
+
+
 
 3. 
 a) Construct a table with the average age of women at childbirth in wave 8, the proportion of newborn children who were breastfed and the average newborn child's birthweight in kilograms (for children born between waves 7 and 8).
