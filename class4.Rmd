@@ -1,0 +1,32 @@
+---
+title: 'Data Analysis 3: Week 4'
+author: "Alexey Bessudnov"
+date: "7 February 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+Plan for today:
+
+- Assignment 1
+- Relational data
+- Homework for next week
+
+## Exercises
+
+1. Create a balanced panel of all individuals who took part in the Understanding Society from 1 to 4. (Balanced means that you only want to include the individuals who took part in all 4 waves.) Only keep the following variables: person's unique identifier, sex and age. Are there any inconsistencies in the data?
+
+2. Construct a table with the average number of calls per household by region in waves 1 and 8. You'll need to use the following data tables: household data from wave 1 and 8 (a_gor_dv and h_gor_dv identify region) and call records from waves 1 and 8 (callrec, a_ivtnc and h_ivtnc show the total number of calls).
+
+3. 
+a) Construct a table with the average age of women at childbirth in wave 8, the proportion of newborn children who were breastfed and the average newborn child's birthweight in kilograms (for children born between waves 7 and 8).
+b) Split the table by ethnic group for mothers from the following groups: White British, Indian, Pakistani, Bangladeshi, and African.
+c) Compare the results from a)  with the results from wave 2.
+d) Produce a data table that includes only twins born between waves 7 and 8. How many observations have we got? What do their fathers do for living? How many of them participated in wave 1 of the Understanding Society?
+
+
+
