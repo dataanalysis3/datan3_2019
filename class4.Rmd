@@ -8,6 +8,9 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+
 ```
 
 Plan for today:
@@ -18,10 +21,12 @@ Plan for today:
 
 ## Exercises
 
-1. Create a balanced panel of all individuals who took part in the Understanding Society from 1 to 4. (Balanced means that you only want to include the individuals who took part in all 4 waves.) Only keep the following variables: person's unique identifier, sex and age. Are there any inconsistencies in the data?
+1. Create a balanced panel of all individuals who took part in the Understanding Society from 1 to 4. (Balanced means that you only want to include the individuals who took part in ALL 4 waves.) Only keep the following variables: person's unique identifier, sex and age. Are there any inconsistencies in the data?
 
-```{r}
+    ```{r}
 library(tidyverse)
+# Let's read the data first (and select only the required variables so that we don't have large data frames in the memory).
+# Generally, I'd want to use iteration to read several data frames, but let's ignore this for now.
 W1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_indresp.tab")
 W1 <- W1 %>%
   select(pidp, a_sex, a_dvage)
@@ -35,56 +40,63 @@ W4 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w4/d_indresp.tab")
 W4 <- W4 %>%
   select(pidp, d_sex, d_dvage)
 
+# Joining: balanced panel
 Joined <- W1 %>%
   inner_join(W2, by = "pidp") %>%
   inner_join(W3, by = "pidp") %>%
   inner_join(W4, by = "pidp")
 
+# Joining: every individual who ever took part in any of the waves 1 to 4
 Joined2 <- W1 %>%
   full_join(W2, by = "pidp") %>%
   full_join(W3, by = "pidp") %>%
   full_join(W4, by = "pidp")
 
+# Checking consitency of coding sex across the waves
 Joined %>%
-  count(a_sex, b_sex, c_sex, d_sex) %>%
-  filter(n < 10)
+  count(a_sex, b_sex, c_sex, d_sex)
 
+# Pulling out pidp of individuals with inconsistent coding
 Joined %>%
   mutate(sumSex = a_sex + b_sex + c_sex + d_sex) %>%
   filter(sumSex != 8 & sumSex != 4) %>%
   pull(pidp)
 
-
-```
+    ```
 
 
 2. Construct a table with the average number of calls per household by region in waves 1 and 8. You'll need to use the following data tables: household data from wave 1 and 8 (a_gor_dv and h_gor_dv identify region) and call records from waves 1 and 8 (callrec, a_ivtnc and h_ivtnc show the total number of calls).
 
-```{r}
+    ```{r}
+# Read data for wave 1
+# household data
 H1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_hhresp.tab")
+# call record data
 CR1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_callrec.tab")
 
+# select required variables
 H1 <- H1 %>% select(a_hidp, a_gor_dv)
 CR1ed <- CR1 %>%
   select(a_hidp, a_ivtnc) %>%
+  # this aggregates data at the household level. The original data frame has calls (rather than households) as observations
   group_by(a_hidp) %>%
   summarise(
     ncalls = mean(a_ivtnc)
   )
 
-CR1ed %>%
-  count(a_hidp) %>%
-  filter(n > 1)
-
+# Joining the data tables by household identifier. Note the use of left_join to drop households where an interview was not obtained
 Joined1 <- H1 %>%
   left_join(CR1ed, by = "a_hidp")
 
+# Produce an aggregated table with summary statistics by region
 Aggr1 <- Joined1 %>%
   group_by(a_gor_dv) %>%
   summarise(
     meanCall = mean(ncalls, na.rm = TRUE)
   )
 Aggr1
+
+# Now performing the same steps for wave 8.
 
 H8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_hhresp.tab")
 CR8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_callrec.tab")
@@ -105,8 +117,13 @@ Aggr8 <- Joined8 %>%
   summarise(
     meanCall = mean(ncalls, na.rm = TRUE)
   ) %>%
+  # filter out observations with missing region
   filter(h_gor_dv != -9)
 Aggr8
+
+# at this stage you need to check in the codebook that the numerical codes for regions are the same in waves 1 and 8 (they are)
+
+# Joining the aggregated data tables for waves 1 and 8 using region as the key. 
 
 Aggr1 %>%
   full_join(Aggr8, by = c("a_gor_dv" = "h_gor_dv")) %>%
@@ -114,16 +131,17 @@ Aggr1 %>%
   rename(wave1 = meanCall.x) %>%
   rename(wave8 = meanCall.y)
 
+# The labels for numerical codes for regions are available here -- https://www.understandingsociety.ac.uk/documentation/mainstage/dataset-documentation/wave/1/datafile/a_hhresp/variable/a_gor_dv
 
-```
-
-
-
-3. 
-a) Construct a table with the average age of women at childbirth in wave 8, the proportion of newborn children who were breastfed and the average newborn child's birthweight in kilograms (for children born between waves 7 and 8).
-b) Split the table by ethnic group for mothers from the following groups: White British, Indian, Pakistani, Bangladeshi, and African.
-c) Compare the results from a)  with the results from wave 2.
-d) Produce a data table that includes only twins born between waves 7 and 8. How many observations have we got? What do their fathers do for living? How many of them participated in wave 1 of the Understanding Society?
+    ```
 
 
+3.
+
+    a) Construct a table with the average age of women at childbirth in wave 8, the proportion of newborn children who were breastfed and the average newborn child's birthweight in kilograms (for children born between waves 7 and 8).
+    b) Split the table by ethnic group for mothers from the following groups: White British, Indian, Pakistani, Bangladeshi, and African.
+    c) Compare the results from a)  with the results from wave 2.
+    d) Produce a data table that includes only twins born between waves 7 and 8. How many observations have we got? What do their fathers do for living? How many of them participated in wave 1 of the Understanding Society?
+
+We did not have time to complete this exercise in class. I'll keep it here for future use.
 
