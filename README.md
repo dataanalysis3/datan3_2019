@@ -112,10 +112,13 @@ Solutions for exercises in R for Data Science:
 
 - J.B.Arnold. [R for Data Science: Exercise Solutions](https://jrnold.github.io/r4ds-exercise-solutions/)
 
-
 For details on how to use R Markdown see:
 
 - Y.Xie, J.J.Allaire, G.Grolemund. (2018). [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/).
+
+The guide on using Git and Github with R Studio:
+
+- J.Bryant et al. [Happy Git and GitHub for the useR](https://happygitwithr.com/).
 
 There are many other resources that can help you with R. [DataCamp](https://www.datacamp.com/) is an online learning platform that covers most topics in this module. Also see a list of other resources here <https://www.tidyverse.org/learn/>.
 
