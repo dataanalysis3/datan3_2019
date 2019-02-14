@@ -120,6 +120,12 @@ The guide on using Git and Github with R Studio:
 
 - J.Bryant et al. [Happy Git and GitHub for the useR](https://happygitwithr.com/).
 
+Data visualisation.
+
+- H.Wickham. (2009). ggplot2: Elegant graphics for data analysis. N.Y.: Springer. [Available in the university library as an ebook.]
+- W.Chang. (2013). R Graphics Cookbook. O'Reilly. [Available in the university library as an ebook.]
+
+
 There are many other resources that can help you with R. [DataCamp](https://www.datacamp.com/) is an online learning platform that covers most topics in this module. Also see a list of other resources here <https://www.tidyverse.org/learn/>.
 
 Full documentation for the *Understanding Society* is available at <https://www.understandingsociety.ac.uk/>.
