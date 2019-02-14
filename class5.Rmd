@@ -1,0 +1,36 @@
+---
+title: 'Data Analysis 3: Week 5'
+author: "Alexey Bessudnov"
+date: "14 February 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+
+```
+Plan for today:
+
+- Assignment 1: marks and feedback
+- Assignment 2
+- Tidy data and reshaping
+- Homework for next week
+
+## Exercises
+
+1. Join individual-level substantive data for the first three waves of the Understabding Society (*indresp* files). Keep the balanced panel only (i.e. individuals who participated in all three waves). Keep only the following variables: pidp, derived sex and age, and total net personal income (*fimnnet_dv*).
+
+2. Calculate the average difference in monthly income between waves 1 and 2, and waves 2 and 3.
+
+3. Estimate and interpret a linear model showing how income is associated with age and sex, for wave 1. Can you do it for all three waves of UndSoc at the same time?
+
+4. Reshape the data from the wide to long format (check http://abessudnov.net/dataanalysis3/tidy-data.html).
+
+5. Estimate a model showing how income depends on age and sex for all three waves, adding dummy variables for wave. Remember that the association between income and age is often non-linear and account for this in your models.
+
+6. In the long data set, create two variables showing income in the previous and subsequent wave. Use the *lead* and *lag* window functions from **dplyr**: https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html . Summarise the differences in incomes between waves 1 and 2, and 2 and 3.
+
+7. Use the three original data tables for waves 1 to 3 and combine them in the long format. (check *bind_rows*). Now convert into the wide format. 
