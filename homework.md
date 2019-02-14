@@ -29,3 +29,10 @@ In this file I will list home assignments you need to to **before** coming to cl
 - Read ch.12 from R for Data Science (Tidy data): https://r4ds.had.co.nz/tidy-data.html . Do exercises 12.2.1, 12.3.3, 12.4.3.
 - Read ch.6 (Tidy data) from the module's website: http://abessudnov.net/dataanalysis3/tidy-data.html
 
+##### 21 February
+
+- Read ch.3 from R for Data Science (Data visualisation): https://r4ds.had.co.nz/data-visualisation.html . Do exercises 3.3.1, 3.5.1, 3.6.1 (and others if you have time).
+- Read ch.7 (Data visualisation) from the module's website: http://abessudnov.net/dataanalysis3/datavis.html
+
+
+
