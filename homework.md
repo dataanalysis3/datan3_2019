@@ -34,5 +34,9 @@ In this file I will list home assignments you need to to **before** coming to cl
 - Read ch.3 from R for Data Science (Data visualisation): https://r4ds.had.co.nz/data-visualisation.html . Do exercises 3.3.1, 3.5.1, 3.6.1 (and others if you have time).
 - Read ch.7 (Data visualisation) from the module's website: http://abessudnov.net/dataanalysis3/datavis.html
 
+##### 1 March
+
+- Read ch.8 (Data visualisation 2) from the module's website: http://abessudnov.net/dataanalysis3/datavis2.html
+
 
 
