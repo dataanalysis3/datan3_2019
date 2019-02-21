@@ -1,0 +1,44 @@
+---
+title: 'Data Analysis 3: Week 6'
+author: "Alexey Bessudnov"
+date: "21 February 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+
+```
+Plan for today:
+
+- Assignment 2: solution
+- Assignment 3
+- Simple data visualisation 
+- Homework for next week
+
+## Exercises
+
+1. Read the *indresp* file from Wave 8 and keep the following variables: pidp, derived sex and age, ethnic group (h_indresp), government office region (h_gor_dv), and net personal income (h_fimnnet_dv).
+
+For all charts use ggplot2. You may need to clean and recode variable before visualising.
+
+We will start with univariate distributions.
+
+2. Visualise the distribution of income with a histogram, a density plot and a box plot.
+
+3. Visualise the distribution of sex with a bar graph. 
+
+Bivariate distributions.
+
+4. Create a bart chart showing mean income by region. Then make a grouped bart chart showing mean income by region for men and women separately.
+
+5. Make a dot plot showing the same information as above (without splitting by sex). Sort regions in the descending order by mean income.
+
+6. Make a line chart showing mean income by age. Make another chart showing the association for men and women separately.
+
+7. Create a scatterplot showing the association between age and income for randomly selected 100 men in the sample. Now display a smoothing curve on the same graph showing the association between age and income.
+
+
