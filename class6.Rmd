@@ -23,13 +23,13 @@ Plan for today:
 
 1. Read the *indresp* file from Wave 8 and keep the following variables: pidp, derived sex and age, ethnic group (h_indresp), government office region (h_gor_dv), and net personal income (h_fimnnet_dv).
 
-```{r}
+    ```{r}
 library(tidyverse)
 Data8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab")
 Data8 <- Data8 %>%
   select(pidp, h_sex_dv, h_age_dv, h_gor_dv, h_fimnnet_dv)
 
-```
+    ```
 
 For all charts use ggplot2. You may need to clean and recode variable before visualising.
 
@@ -37,7 +37,7 @@ We will start with univariate distributions.
 
 2. Visualise the distribution of income with a histogram, a density plot and a box plot.
 
-```{r}
+    ```{r}
 ggplot(Data8,
        aes(x = h_fimnnet_dv)) +
   geom_histogram(binwidth = 100) +
@@ -54,11 +54,11 @@ ggplot(Data8,
   geom_boxplot() +
   ylim(-100,5000)
 
-```
+    ```
 
 3. Visualise the distribution of sex with a bar graph. 
 
-```{r}
+    ```{r}
 Data8 %>%
   mutate(h_sex_dv = ifelse(h_sex_dv == 1, "male",
                            ifelse(h_sex_dv == 2, "female", NA))) %>%
@@ -87,13 +87,13 @@ Data8 %>%
   scale_y_continuous(breaks=seq(0, 60, 10))
 
 
-```
+    ```
 
 Bivariate distributions.
 
 4. Create a bar chart showing mean income by region.
 
-```{r}
+    ```{r}
 Data8 <- Data8 %>%
   mutate(region = recode(h_gor_dv,
                          `-9` = NA_character_,
@@ -125,12 +125,12 @@ ggplot(
   ylab("Median net monthly personal income") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-```
+    ```
 
 
 5. Make a dot plot showing the same information as above (without splitting by sex). Sort regions in the descending order by mean income.
 
-```{r}
+    ```{r}
 byRegion %>%
 ggplot(
   aes(y = reorder(region, medianIncome), x = medianIncome)
@@ -138,11 +138,11 @@ ggplot(
   geom_point(size = 3) +
   xlab("Median net monthly personal income") +
   ylab("")
-```
+    ```
 
 6. Make a line chart showing median income by age.
 
-```{r}
+    ```{r}
 byAge <- Data8 %>%
   group_by(h_age_dv) %>%
   summarise(
@@ -176,5 +176,5 @@ byAgeSex %>%
         ylim(0,2500) +
         xlab("Age") +
         ylab("Median income")
-```
+    ```
 
