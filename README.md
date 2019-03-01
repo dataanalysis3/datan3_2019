@@ -127,6 +127,11 @@ Data visualisation.
 - K.Healy. (2018). Data Visualization: A Practical Introduction. Princeton University Press. This is a new book and I just ordered it for the library. You can access the draft of the book here: https://socviz.co/  and the code for the graphs is available here: https://github.com/kjhealy/dataviz .
 - The BBC Visual and Data Journalism cookbook for R Graphics: https://bbc.github.io/rcookbook/
 
+Machine learning.
+
+- G.James et al. (2013, 8th printing 2017). An Introduction to Statistical Learning with Applications in R. Springer. Freely available at http://www-bcf.usc.edu/~gareth/ISL/
+- The caret package. Online textbook: http://topepo.github.io/caret/index.html
+
 
 There are many other resources that can help you with R. [DataCamp](https://www.datacamp.com/) is an online learning platform that covers most topics in this module. Also see a list of other resources here <https://www.tidyverse.org/learn/>.
 
