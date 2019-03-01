@@ -1,0 +1,26 @@
+---
+title: 'Data Analysis 3: Week 7'
+author: "Alexey Bessudnov"
+date: "1 March 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+
+```
+Plan for today:
+
+1. Machine learning workshop at the RSS.
+2. Exercises on data visualisation.
+3. Homework for next week: data structures.
+
+Exercises:
+
+1. Open the data from the youth questionnaire from wave 8.
+2. Today we will be working with the variable on BMI (h_ypbmi_dv) and visualise the distribution of BMI by sex, age, and ethnic group.
+
+
