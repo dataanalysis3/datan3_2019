@@ -23,4 +23,121 @@ Exercises:
 1. Open the data from the youth questionnaire from wave 8.
 2. Today we will be working with the variable on BMI (h_ypbmi_dv) and visualise the distribution of BMI by sex, age, and ethnic group.
 
+```{r}
+library(tidyverse)
+youth8 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_youth.tab")
 
+# summary(youth8$h_ypbmi_dv)
+youth8 %>% pull(h_ypbmi_dv) %>% summary()
+
+youth8 <- youth8 %>%
+  mutate(bmi = recode(h_ypbmi_dv, `-9` = NA_real_))
+
+youth8 %>% pull(bmi) %>% summary()
+
+youth8 %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 30, colour = "red") +
+  xlab("Body mass index") +
+  ylab("Number of observations")
+
+library(bbplot)
+youth8 %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 30, colour = "red") +
+  ylab("Number of observations") +
+  bbc_style() +
+  xlab("Body mass index")
+
+```
+
+BMI by sex.
+
+Boxplot:
+
+```{r}
+
+youth8 <- youth8 %>%
+  mutate(sex = ifelse(h_sex_dv == 2, "female",
+                      ifelse(h_sex_dv == 1, "male", NA)))
+youth8 %>% count(h_sex_dv, sex)
+
+youth8 %>%
+  ggplot(aes(x = sex, y = bmi)) +
+  geom_boxplot() +
+  coord_flip()
+
+```
+
+density by group
+
+```{r}
+youth8 %>%
+  ggplot(aes(x = bmi, fill = sex)) +
+  geom_histogram(position = "dodge")
+
+youth8 %>%
+  ggplot(aes(x = bmi, fill = sex)) +
+  geom_histogram(bins = 50, position = "identity", alpha = 0.5)
+
+youth8 %>%
+  ggplot(aes(x = bmi, colour = sex)) +
+  geom_density()
+
+youth8 %>%
+  ggplot(aes(x = bmi, fill = sex)) +
+  geom_density()
+
+youth8 %>%
+  ggplot(aes(x = bmi, fill = sex)) +
+  geom_density() +
+  scale_fill_manual(values = c("purple", "yellow"))
+
+```
+
+Barplot with means.
+
+```{r}
+youth8 %>%
+  group_by(sex) %>%
+  summarise(
+    meanBMI = mean(bmi, na.rm = TRUE)
+  ) %>%
+  ggplot(aes(x = sex, y = meanBMI, fill = sex)) +
+  geom_bar(stat = "identity")
+
+youth8 %>%
+  group_by(sex) %>%
+  summarise(
+    meanBMI = mean(bmi, na.rm = TRUE)
+  ) %>%
+  ggplot(aes(x = sex, y = meanBMI)) +
+  geom_point() +
+  ylim(0, 25) +
+  coord_flip()
+
+youth8 %>%
+  group_by(h_gor_dv) %>%
+  summarise(
+    meanBMI = mean(bmi, na.rm = TRUE)
+  ) %>%
+  ggplot(aes(x = reorder(as.factor(h_gor_dv), meanBMI), y = meanBMI)) +
+  geom_point() +
+  coord_flip()
+
+```
+
+faceted chart.
+
+```{r}
+youth8 %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 30, colour = "red") +
+  xlab("Body mass index") +
+  ylab("Number of observations") +
+  facet_wrap(~ sex)
+
+```
