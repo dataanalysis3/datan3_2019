@@ -42,3 +42,8 @@ In this file I will list home assignments you need to to **before** coming to cl
 
 - Read the following chapters from R for Data Science: ch. 15 (Factors) and ch.20 (Vectors). Do exercises 15.4.1, 15.5.1, 20.4.6.
 
+##### 14 March
+
+- Ch. 21 (Iteration) from R for Data Science: https://r4ds.had.co.nz/iteration.html. Exercise 21.2.1 (part 1), 21.3.5 (1 and 2).
+- Ch. 13 (Control Structures) from R Programming for Data Science: https://bookdown.org/rdpeng/rprogdatascience/control-structures.html
+
