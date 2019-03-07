@@ -1,4 +1,4 @@
----
+ ---
 title: 'Data Analysis 3: Week 8'
 author: "Alexey Bessudnov"
 date: "7 March 2019"
@@ -29,21 +29,113 @@ Plan for today:
 
 a) numeric (integer and double). Vectorisation.
 
-Exercise 1. Create a vector of length 100, randomly drawing it from the standard normal distribution. Find the mean and standard deviation. Multiply the vector by 2. Are the meand and standard deviation going to change.
+```{r}
+x <- 1:6
+typeof(x)
+length(x)
+y <- c(1.2, 1.5, 2.76)
+typeof(y)
+length(y)
+
+x*2
+
+x + y
+
+```
+
+Exercise 1. Create a vector of length 100, randomly drawing it from the standard normal distribution. Find the mean and standard deviation. Multiply the vector by 2. Are the mean and standard deviation going to change?
+
+```{r}
+x <- rnorm(100)
+x
+mean(x)
+mean(x*2)
+sd(x)
+sd(x*2)
+
+```
 
 Exercise 2. Read the individual wave 8 UndSoc data and extract the variable for age from the data frame. What type if it?
+
+```{r}
+library(tidyverse)
+df <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab")
+df %>% pull(h_age_dv) %>% typeof()
+df %>% pull(h_age_dv) %>% table()
+age <- df %>% pull(h_age_dv)
+age <- as.integer(age)
+
+```
 
 b) logical.
 
 Exercise 3. Convert sex into a logical vector for being male. Calculate the proportion of men in the data set.
 
+```{r}
+sex <- df %>% pull(h_sex_dv)
+male <- ifelse(sex == 1, TRUE, FALSE)
+male
+typeof(male)
+TRUE == 1
+FALSE == 0
+
+mean(male)
+
+```
+
 c) character.
 
 Exercise 4. Convert sex into a character vector with the values "male" and "female".
 
+```{r}
+sex_chr <- ifelse(sex == 1, "male",
+                  ifelse(sex == 2, "female", NA))
+typeof(sex_chr)
+
+x <- 1:6
+x
+x <- as.character(x)
+x
+mean(x)
+x <- as.numeric(x)
+x
+y <- c("1", "a", "2")
+as.numeric(y)
+
+```
+
 d) factors (augmented numeric).
 
 Exercise 5. Convert sex into a factor. Change the order of levels.
+
+```{r}
+library(tidyverse)
+library(forcats)
+
+sex_fct <- factor(sex_chr)
+typeof(sex_fct)
+class(sex_fct)
+str(sex_fct)
+levels(sex_fct)
+
+sex_fct2 <- factor(sex_chr, levels = c("male", "female"))
+levels(sex_fct2)
+
+sex_fct3 <- fct_relevel(sex_chr, "male")
+levels(sex_fct3)
+
+sex_fct3 %>%
+  as_tibble() %>%
+  filter(!is.na(sex_fct3)) %>%
+  ggplot(aes(x = value)) +
+  geom_bar()
+
+sex_fct %>%
+  as_tibble() %>%
+  filter(!is.na(sex_fct3)) %>%
+  ggplot(aes(x = value)) +
+  geom_bar()
+```
 
 Exercise 6. Split age into four categories (<30, 30-45, 46-60, >60), make it into a factor and set the levels in the correct order.
 
@@ -53,11 +145,46 @@ Exercise 8. Produce a data frame with the mean earnings from main job by age gro
 
 e) matrices and data frames.
 
+```{r}
+x <- matrix(1:10, nrow = 2)
+x
+
+y <- data.frame(x = c(TRUE, FALSE, TRUE), y = 1:3, z = letters[1:3])
+y
+``` 
+
 f) lists.
 
-Exercise 9. Make a list of four elements containing: 1) the vector from exercise 1, 2) the vector from exercise 3, 3) TRUE, 4) your name.
+Exercise 9. Make a list of four elements containing: 1) the vector from exercise 1, 2) the vector from exercise 3, 3) TRUE, 4) a list with your name and your surname.
+
+```{r}
+l1 <- list(x, sex_chr, TRUE, list("Alexey", "Bessudnov"))
+str(l1)
+
+a <- l1[2]
+typeof(a)
+b <- l1[[2]]
+typeof(b)
+
+l1[[4]][[2]]
+```
+
 
 Exercise 10. Regress earnings on age and age squared. Extract regression coefficients as a vector.
+
+```{r}
+m1 <- lm(h_fimnnet_dv ~ h_age_dv + I(h_age_dv^2), df)
+m1
+summary(m1)
+typeof(m1)
+str(m1)
+
+m1$coefficients
+m1[[1]]
+typeof(m1$coefficients)
+
+```
+
 
 g) missing values.
 
