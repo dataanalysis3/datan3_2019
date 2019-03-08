@@ -47,7 +47,7 @@ Exercise 1. Create a vector of length 100, randomly drawing it from the standard
 
 ```{r}
 x <- rnorm(100)
-x
+head(x)
 mean(x)
 mean(x*2)
 sd(x)
@@ -55,7 +55,7 @@ sd(x*2)
 
 ```
 
-Exercise 2. Read the individual wave 8 UndSoc data and extract the variable for age from the data frame. What type if it?
+Exercise 2. Read the individual wave 8 UndSoc data and extract the variable for age from the data frame. What type is it?
 
 ```{r}
 library(tidyverse)
@@ -63,7 +63,9 @@ df <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab")
 df %>% pull(h_age_dv) %>% typeof()
 df %>% pull(h_age_dv) %>% table()
 age <- df %>% pull(h_age_dv)
+typeof(age)
 age <- as.integer(age)
+typeof(age)
 
 ```
 
@@ -74,7 +76,7 @@ Exercise 3. Convert sex into a logical vector for being male. Calculate the prop
 ```{r}
 sex <- df %>% pull(h_sex_dv)
 male <- ifelse(sex == 1, TRUE, FALSE)
-male
+head(male)
 typeof(male)
 TRUE == 1
 FALSE == 0
@@ -137,12 +139,6 @@ sex_fct %>%
   geom_bar()
 ```
 
-Exercise 6. Split age into four categories (<30, 30-45, 46-60, >60), make it into a factor and set the levels in the correct order.
-
-Exercise 7. Set "46-60" as the reference category.
-
-Exercise 8. Produce a data frame with the mean earnings from main job by age group and reorder the levels for age according to mean earnings (in the decreasing order).
-
 e) matrices and data frames.
 
 ```{r}
@@ -155,7 +151,7 @@ y
 
 f) lists.
 
-Exercise 9. Make a list of four elements containing: 1) the vector from exercise 1, 2) the vector from exercise 3, 3) TRUE, 4) a list with your name and your surname.
+Exercise 6. Make a list of four elements containing: 1) the vector from exercise 1, 2) the vector from exercise 3, 3) TRUE, 4) a list with your name and your surname.
 
 ```{r}
 l1 <- list(x, sex_chr, TRUE, list("Alexey", "Bessudnov"))
@@ -170,7 +166,7 @@ l1[[4]][[2]]
 ```
 
 
-Exercise 10. Regress earnings on age and age squared. Extract regression coefficients as a vector.
+Exercise 7. Regress earnings on age and age squared. Extract regression coefficients as a vector.
 
 ```{r}
 m1 <- lm(h_fimnnet_dv ~ h_age_dv + I(h_age_dv^2), df)
@@ -184,7 +180,6 @@ m1[[1]]
 typeof(m1$coefficients)
 
 ```
-
 
 g) missing values.
 
