@@ -46,4 +46,5 @@ In this file I will list home assignments you need to to **before** coming to cl
 
 - Ch. 21 (Iteration) from R for Data Science: https://r4ds.had.co.nz/iteration.html. Exercise 21.2.1 (part 1), 21.3.5 (1 and 2).
 - Ch. 13 (Control Structures) from R Programming for Data Science: https://bookdown.org/rdpeng/rprogdatascience/control-structures.html
+- Ch.5 (Iteration) from the module's website: http://abessudnov.net/dataanalysis3/iteration.html
 
