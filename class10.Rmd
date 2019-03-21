@@ -1,0 +1,35 @@
+---
+title: 'Data Analysis 3: Week 10'
+author: "Alexey Bessudnov"
+date: "21 March 2019"
+output: github_document
+---
+
+Plan for today.
+
+- Assignment 5: discuss
+- Functions in R
+
+Exercises.
+
+Exercise 1. Write a function to calculate the mean of a numeric vector.
+
+Exercise 2. Modify this function to include an extra argument to deal with missing values.
+
+Exercise 3. Modify this function to return an error when the vector is not numeric.
+
+Exercise 4. Modify this function so that it saves the mean in the environment with the name "meanx". (Hint: think about environments.)
+
+Exercise 5. Write a function to calculate the factorial (i.e. 5! = 1x2x3x4x5). Note that 0! = 1, and for the negative numbers the factorial is not defined. (Hint: use recursion.)
+
+Exercise 6. Use this function to calculate the factorial for the numbers from 1 to 10. (Hint: use map()).
+
+Exercise 7. Open the indresp file for wave 8 and keep two variables: sex (h_sex_dv) and total net personal income (h_fimnnet_dv). You may need to clean sex and retain only values for male and female. Keep only cases with non-missing values for sex and income.
+
+a) regress income on sex (i.e. find the difference between mean income for men and women). Store the estimate for the regression coefficient.
+b) Now regress income on sex 100 times, each time with a random sample of 1,000 people. Store 100 regression coefficients in a vector and illustrate their distribution graphically.
+c) Now do the same, changing the sample size to 100 people, and compare two distributions.
+
+
+
+
