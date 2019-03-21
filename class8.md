@@ -17,7 +17,7 @@ Plan for today:
 
 -   Vectors.
 
-1.  numeric (integer and double). Vectorisation.
+Numeric (integer and double). Vectorisation.
 
 ``` r
 x <- 1:6
@@ -130,7 +130,7 @@ typeof(age)
 
     ## [1] "integer"
 
-1.  logical.
+Logical vectors.
 
 Exercise 3. Convert sex into a logical vector for being male. Calculate the proportion of men in the data set.
 
@@ -166,7 +166,7 @@ mean(male)
 
     ## [1] 0.4560055
 
-1.  character.
+Character vectors.
 
 Exercise 4. Convert sex into a character vector with the values "male" and "female".
 
@@ -212,7 +212,7 @@ as.numeric(y)
 
     ## [1]  1 NA  2
 
-1.  factors (augmented numeric).
+Factors (augmented numeric).
 
 Exercise 5. Convert sex into a factor. Change the order of levels.
 
@@ -278,7 +278,7 @@ sex_fct %>%
 
 ![](class8_files/figure-markdown_github/unnamed-chunk-6-2.png)
 
-1.  matrices and data frames.
+Matrices and data frames.
 
 ``` r
 x <- matrix(1:10, nrow = 2)
@@ -299,7 +299,7 @@ y
     ## 2 FALSE 2 b
     ## 3  TRUE 3 c
 
-1.  lists.
+Lists.
 
 Exercise 6. Make a list of four elements containing: 1) the vector from exercise 1, 2) the vector from exercise 3, 3) TRUE, 4) a list with your name and your surname.
 
@@ -464,6 +464,6 @@ typeof(m1$coefficients)
 
     ## [1] "double"
 
-1.  missing values.
+Missing values.
 
-2.  other data types: dates and times.
+Other data types: dates and times.
