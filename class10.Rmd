@@ -14,15 +14,96 @@ Exercises.
 
 Exercise 1. Write a function to calculate the mean of a numeric vector.
 
+```{r}
+myMean <- function(x) {
+  sum(x) / length(x)
+}
+
+myMean(1:10)
+mean(1:10)
+myMean(c(1:10, NA))
+mean(c(1:10, NA))
+mean(c(1:10, NA), na.rm = TRUE)
+
+```
+
 Exercise 2. Modify this function to include an extra argument to deal with missing values.
+
+```{r}
+myMean2 <- function(x, rm.missing = FALSE) {
+        if (rm.missing == TRUE) {
+                x <- na.omit(x)
+        }
+        sum(x) / length(x)
+}
+
+myMean(1:10)
+myMean2(c(1:10, NA))
+myMean2(c(1:10, NA), rm.missing = TRUE)
+myMean2(c(1:10, "a"))
+```
 
 Exercise 3. Modify this function to return an error when the vector is not numeric.
 
+```{r}
+myMean3 <- function(x, rm.missing = FALSE) {
+        if (!is.numeric(x)) {
+                stop("The vector is not numeric.")
+        }
+        if (rm.missing == TRUE) {
+                x <- na.omit(x)
+        }
+        sum(x) / length(x)
+}
+myMean3(c(1:10, "a"))
+
+```
+
 Exercise 4. Modify this function so that it saves the mean in the environment with the name "meanx". (Hint: think about environments.)
+
+```{r}
+myMean(1:10)
+# meanx <- myMean(1:10)
+myMean4 <- function(x) {
+        meanx <<- sum(x) / length(x)
+        meanx
+}
+myMean4(1:10)
+```
 
 Exercise 5. Write a function to calculate the factorial (i.e. 5! = 1x2x3x4x5). Note that 0! = 1, and for the negative numbers the factorial is not defined. (Hint: use recursion.)
 
+```{r}
+myFactorial <- function(x){
+  if (x == 0) {return(1)}
+  x * myFactorial(x-1)
+}
+
+myFactorial(4)
+
+
+```
+
 Exercise 6. Use this function to calculate the factorial for the numbers from 1 to 10. (Hint: use map()).
+
+```{r}
+# this is not going to work because the function has not been vectorised
+myFactorial(1:10)
+
+# a for() loop
+output <- numeric(10)
+for (i in 1:10) {
+  output[i] <- myFactorial(i)
+}
+output
+
+# with map()
+
+mapply(myFactorial, 1:10)
+map_dbl(1:10, myFactorial)
+
+```
+
 
 Exercise 7. Open the indresp file for wave 8 and keep two variables: sex (h_sex_dv) and total net personal income (h_fimnnet_dv). You may need to clean sex and retain only values for male and female. Keep only cases with non-missing values for sex and income.
 
@@ -30,6 +111,34 @@ a) regress income on sex (i.e. find the difference between mean income for men a
 b) Now regress income on sex 100 times, each time with a random sample of 1,000 people. Store 100 regression coefficients in a vector and illustrate their distribution graphically.
 c) Now do the same, changing the sample size to 100 people, and compare two distributions.
 
+```{r}
+library(tidyverse)
+df <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab") %>%
+        select(h_sex_dv, h_fimnnet_dv)
 
+df <- df %>%
+        mutate(h_sex_dv = ifelse(h_sex_dv == 1, "male",
+                      ifelse(h_sex_dv == 2, "female", NA))) %>%
+        filter(!is.na(h_sex_dv)) %>%
+        filter(!is.na(h_fimnnet_dv))
+
+est <- lm(h_fimnnet_dv ~ h_sex_dv, df)$coefficients[[2]]
+
+output <- numeric(100)
+for (i in 1:100) {
+  df1 <- df %>% sample_n(1000)
+  output[i] <- lm(h_fimnnet_dv ~ h_sex_dv, df1)$coefficients[[2]]
+}
+output
+
+sexCoef <- map(1:100, ~ df %>% sample_n(100)) %>%
+        map_dbl(~ lm(h_fimnnet_dv ~ h_sex_dv, data = .)$coefficients[2])
+
+enframe(sexCoef) %>%
+        ggplot(aes(x = value)) +
+        geom_histogram() +
+        geom_vline(xintercept = est, colour = "red")
+
+```
 
 
