@@ -41,3 +41,19 @@ https://github.com/dataanalysis3/assignment-3
 Deadline: 12 March, 2pm.
 
 https://github.com/dataanalysis3/assignment4
+
+#### Statistical assignment 5
+
+10% of the final mark.
+
+Deadline: 26 March, 2pm.
+
+https://github.com/dataanalysis3/assignment5
+
+#### Final statistical report
+
+50% of the final mark.
+
+Deadline: 9 April, 2pm.
+
+https://github.com/dataanalysis3/datan3_2019/blob/master/report.md
