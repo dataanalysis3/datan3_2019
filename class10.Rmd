@@ -5,6 +5,10 @@ date: "21 March 2019"
 output: github_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 Plan for today.
 
 - Assignment 5: discuss
@@ -21,9 +25,6 @@ myMean <- function(x) {
 
 myMean(1:10)
 mean(1:10)
-myMean(c(1:10, NA))
-mean(c(1:10, NA))
-mean(c(1:10, NA), na.rm = TRUE)
 
 ```
 
@@ -40,7 +41,6 @@ myMean2 <- function(x, rm.missing = FALSE) {
 myMean(1:10)
 myMean2(c(1:10, NA))
 myMean2(c(1:10, NA), rm.missing = TRUE)
-myMean2(c(1:10, "a"))
 ```
 
 Exercise 3. Modify this function to return an error when the vector is not numeric.
@@ -55,7 +55,7 @@ myMean3 <- function(x, rm.missing = FALSE) {
         }
         sum(x) / length(x)
 }
-myMean3(c(1:10, "a"))
+# myMean3(c(1:10, "a"))
 
 ```
 
@@ -81,7 +81,6 @@ myFactorial <- function(x){
 
 myFactorial(4)
 
-
 ```
 
 Exercise 6. Use this function to calculate the factorial for the numbers from 1 to 10. (Hint: use map()).
@@ -99,6 +98,8 @@ output
 
 # with map()
 
+library(tidyverse)
+
 mapply(myFactorial, 1:10)
 map_dbl(1:10, myFactorial)
 
@@ -112,7 +113,6 @@ b) Now regress income on sex 100 times, each time with a random sample of 1,000 
 c) Now do the same, changing the sample size to 100 people, and compare two distributions.
 
 ```{r}
-library(tidyverse)
 df <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w8/h_indresp.tab") %>%
         select(h_sex_dv, h_fimnnet_dv)
 
