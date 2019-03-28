@@ -1,0 +1,208 @@
+---
+title: 'Data Analysis 3: Week 11'
+author: "Alexey Bessudnov"
+date: "28 March 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+
+```
+Plan for today.
+
+1. Assignment 5: solutions.
+2. Final reports.
+
+**Longitudinal data.**
+
+Example from class 5.
+
+```{r}
+library(tidyverse)
+# Read data and select variables
+Ind1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_indresp.tab")
+Ind1 <- Ind1 %>%
+  select(pidp, a_sex_dv, a_age_dv, a_fimnnet_dv)
+Ind2 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w2/b_indresp.tab")
+Ind2 <- Ind2 %>%
+  select(pidp, b_sex_dv, b_age_dv, b_fimnnet_dv)
+Ind3 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w3/c_indresp.tab")
+Ind3 <- Ind3 %>%
+  select(pidp, c_sex_dv, c_age_dv, c_fimnnet_dv)
+
+Wide <- Ind1 %>%
+  full_join(Ind2, by = "pidp") %>%
+  full_join(Ind3, by = "pidp")
+Wide
+
+# convert to long
+
+Long <- Wide %>%
+  gather(a_sex_dv:c_fimnnet_dv, key = "variable", value = "value") %>%
+  separate(variable, into = c("wave", "variable"), sep = "_", extra = "merge") %>%
+  spread(key = variable, value = value)
+Long
+```
+
+Let's make income categorical to make it closer to your question 1.
+
+```{r}
+
+summary(Long$fimnnet_dv)
+
+Long <- Long %>%
+        mutate(income = case_when(
+               fimnnet_dv < 500 ~ "Low",
+               fimnnet_dv >= 500 & fimnnet_dv < 2000 ~ "Middle",
+               fimnnet_dv >= 2000 ~ "High"
+        )) %>%
+        mutate(sex_dv = ifelse(sex_dv == 2, "female", ifelse(sex_dv == 1, "male", NA)))
+Long               
+
+# and back to wide
+
+Wide <- Long %>%
+  gather(age_dv:income, key = "variable", value = "value") %>%
+  unite("variable", c("wave", "variable"), sep = "_") %>%
+  spread(key = variable, value = value)
+
+Wide %>%
+        select(pidp, a_income, b_income, c_income)
+
+```
+
+You may want to first look at the distributions.
+
+```{r}
+qplot(Wide$a_income)
+qplot(Wide$b_income)
+qplot(Wide$c_income)
+
+```
+
+Trajectorties.
+
+```{r}
+Wide <- Wide %>%
+        unite("type", a_income, b_income, c_income)
+Wide %>% count(type) %>% arrange(-n) %>% print(n = 50)
+```
+
+If you want to do something more advanced use sequence analysis and the package TraMiNer: http://traminer.unige.ch/ .
+
+**Childbirth and satisfaction**
+
+The key thing here is to identify new childbirths. Note the *newborn* data sets: https://www.understandingsociety.ac.uk/documentation/mainstage/dataset-documentation . You want to create a data frame that includes only new mothers and fathers.
+
+```{r}
+newborn2 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w2/b_newborn.tab")
+```
+At this stage you may want to filter out those who don't live with their children or whose children died.
+
+```{r}
+# identify new parents in wave 2
+
+newparent2 <- Ind2 %>%
+        semi_join(newborn2, by = "pidp")
+
+newparent2 %>%
+ggplot(aes(x = b_age_dv)) +
+        geom_histogram() +
+        facet_wrap(~ b_sex_dv)
+
+```
+
+We can also look at how income changes in the wave following the childbirth. 
+
+```{r}
+newparent2 <- newparent2 %>%
+        left_join(Ind3, by = "pidp") %>%
+        mutate(incomeChange = c_fimnnet_dv - b_fimnnet_dv)
+qplot(newparent2$incomeChange)
+newparent2 %>%
+        group_by(b_sex_dv) %>%
+        summarise(
+                meanChange = mean(incomeChange, na.rm = TRUE)
+        )
+        
+```
+
+Things will become more complex when you've got the data from all waves.
+
+If you want to something more complicated:
+1) Explore change in satisfaction after the childbirth within the household.
+2) Try to fit fixed-effects models: see https://cran.r-project.org/web/packages/plm/vignettes/plmPackage.html
+
+
+**Combination of individual- and household-level data: household composition by ethnic group.**
+
+```{r}
+Egoalt1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_egoalt.tab")
+```
+
+Let us look at the household with a_hidp 68006123.
+
+```{r}
+oneHH <- Egoalt1 %>%
+        filter(a_hidp == 68006123) %>%
+        select(a_hidp, pidp, apidp, a_relationship_dv, a_esex, a_asex)
+oneHH
+```
+
+THis is a household with four people: a couple with two children (so the relationships are 2 (partner/cohabitee), 9 (parent), 12 (step-parent), 4 (natural son/daughter), 7 (stepson/stepdaughter), 14 (natural brother/sister). More specifically, it's a woman with two daughters and their step-father, the woman's partner (they are not married).
+
+The key thing here is to write a code that identifies a household type from this information. Then you can look at the distribution of the types by ethnic group. Note that ethnic group is an individual, not household characteristics, so you will need to develop some rules on how you deal with ethnically mixed households.
+
+As an example, let us calculate the number of people in the household by ethnic group.
+
+```{r}
+Ind1new <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_indresp.tab")
+Ind1new <- Ind1new %>%
+  select(pidp, a_hidp, a_sex_dv, a_age_dv, a_racel_dv)
+
+Ind1new %>%
+        group_by(a_hidp) %>%
+        mutate(nhh = n()) %>%
+        group_by(a_racel_dv) %>%
+        summarise(hhsize = mean(nhh, na.rm = TRUE))
+
+```
+
+This is actually not quite correct (since ethnicity is an individual-level variable) and you will be able to do better than this.
+
+Let us get some more details on household 68006123.
+
+```{r}
+oneHH %>%
+        left_join(Ind1new, by = c("a_hidp", "pidp"))
+
+```
+
+So the woman is 39 years old and of her daughters is 17. They are both White British. The male partner and the other daughter were not interviewed. We might get some more informatiom about them from the *indall* file.
+
+```{r}
+Indall1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_indall.tab") %>%
+        filter(a_hidp == 68006123) %>%
+        select(a_hidp, pidp, a_sex_dv, a_age_dv, a_ethn_dv)
+Indall1
+
+```
+
+The male partner is 34 and the other daughter is 14. They are also White British.
+
+Since the other daughter is only 14 maybe we'll be able to locate her in the children's file?
+
+```{r}
+Youth1 <- read_tsv("data/UKDA-6614-tab/tab/ukhls_w1/a_youth.tab") %>%
+        filter(pidp == 68006123) %>%
+        select(pidp, a_sex_dv, a_age_dv, a_ethn_dv)
+Youth1
+```
+
+You want to use the **indall** rather than **indresp** files for this question.
+
+
